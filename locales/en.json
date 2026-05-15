@@ -1,0 +1,154 @@
+{
+  "nav": {
+    "home": "Home",
+    "services": "Services",
+    "blog": "Blog",
+    "contact": "Contact Us",
+    "quote": "Get a Quote"
+  },
+  "hero": {
+    "badge": "Leading in Technology",
+    "title": "We Build Your",
+    "title2": "Digital Future",
+    "subtitle": "Integrated technology solutions that transform your vision into outstanding digital reality",
+    "cta": "Start Your Project",
+    "cta2": "About Us",
+    "download": "Download Company Profile"
+  },
+  "services": {
+    "title": "Our Services",
+    "subtitle": "We provide comprehensive solutions to transform your business",
+    "web": {
+      "title": "Web Development",
+      "desc": "Advanced websites and web apps with the latest technologies"
+    },
+    "mobile": {
+      "title": "Mobile Apps",
+      "desc": "iOS and Android apps with exceptional user experience"
+    },
+    "erp": {
+      "title": "ERP Systems",
+      "desc": "Integrated Enterprise Resource Planning solutions for efficient operations"
+    },
+    "hr_biometric": {
+      "title": "HR & Biometric Management",
+      "desc": "Smart systems for attendance, employee management, and payroll"
+    },
+    "education": {
+      "title": "Educational Platforms",
+      "desc": "Interactive e-learning environments supporting courses, exams, and certificates"
+    },
+    "news": {
+      "title": "News Platforms",
+      "desc": "Dynamic, high-performance news portals with easy-to-use dashboards"
+    },
+    "logistics": {
+      "title": "Logistics & Shipping",
+      "desc": "Smart delivery solutions, shipment tracking, and fleet management"
+    },
+    "social": {
+      "title": "Social Platforms",
+      "desc": "Custom social networks connecting users with modern engagement features"
+    },
+    "b2b": {
+      "title": "B2B Platforms",
+      "desc": "Business-to-business solutions facilitating wholesale commercial transactions"
+    },
+    "tourism": {
+      "title": "Tourism & Travel",
+      "desc": "Flight and hotel bookings, integrated travel packages, and seamless user experiences"
+    },
+    "real_estate": {
+      "title": "Real Estate Marketing",
+      "desc": "Property listing platforms, advanced search, and virtual tours"
+    },
+    "cloud": {
+      "title": "Cloud Computing",
+      "desc": "Secure and scalable cloud solutions"
+    },
+    "ai": {
+      "title": "Artificial Intelligence",
+      "desc": "Integrating AI into your business operations"
+    },
+    "security": {
+      "title": "Information Security",
+      "desc": "Comprehensive protection for your data and systems"
+    },
+    "consulting": {
+      "title": "Tech Consulting",
+      "desc": "Strategic guidance to achieve your digital goals"
+    }
+  },
+  "stats": {
+    "projects": "Projects Done",
+    "clients": "Happy Clients",
+    "years": "Years Experience",
+    "countries": "Countries"
+  },
+  "blog": {
+    "title": "Latest Articles",
+    "subtitle": "Insights and ideas from the world of technology",
+    "readMore": "Read More",
+    "post1": {
+      "title": "The Future of Web Development in 2025",
+      "excerpt": "Exploring the latest technologies and trends that will shape the future of web development"
+    },
+    "post2": {
+      "title": "AI in Business Services",
+      "excerpt": "How artificial intelligence can transform your company's operations and multiply efficiency"
+    },
+    "post3": {
+      "title": "Cloud Security: A Comprehensive Guide",
+      "excerpt": "Best practices for protecting your data in modern cloud environments"
+    }
+  },
+  "contact": {
+    "title": "Contact Us",
+    "subtitle": "We're here to help you achieve your digital goals",
+    "name": "Full Name",
+    "email": "Email Address",
+    "phone": "Phone Number",
+    "message": "Your Message",
+    "send": "Send Message",
+    "address": "Cairo, Egypt",
+    "emailLabel": "info[at]stb-tech.com",
+    "phoneLabel": "+20 100 000 0000"
+  },
+  "quote": {
+    "title": "Request a Quote",
+    "subtitle": "Tell us about your project and we'll provide a customized offer",
+    "clientName": "Client / Company Name",
+    "clientEmail": "Email Address",
+    "clientPhone": "Phone Number",
+    "projectType": "Project Type",
+    "budget": "Expected Budget",
+    "timeline": "Timeline",
+    "requirements": "Project Requirements",
+    "features": "Required Features",
+    "notes": "Additional Notes",
+    "generate": "Generate PDF Quote",
+    "types": {
+      "web": "Website",
+      "mobile": "Mobile App",
+      "system": "Integrated System",
+      "ai": "AI Solution",
+      "other": "Other"
+    },
+    "budgets": {
+      "small": "Less than $5,000",
+      "medium": "$5,000 - $20,000",
+      "large": "$20,000 - $50,000",
+      "enterprise": "More than $50,000"
+    },
+    "timelines": {
+      "urgent": "Less than 1 month",
+      "short": "1-3 months",
+      "medium": "3-6 months",
+      "long": "More than 6 months"
+    }
+  },
+  "footer": {
+    "rights": "All Rights Reserved",
+    "company": "STB Technology & Business"
+  }
+}
