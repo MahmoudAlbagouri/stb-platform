@@ -67,15 +67,23 @@
 
           <!-- Map placeholder -->
           <div class="gradient-border overflow-hidden rounded-2xl">
-            <div
-              class="h-40 bg-gradient-to-br from-stb-navy to-stb-mid flex items-center justify-center relative"
-            >
-              <MapPin class="w-10 h-10 text-stb-cyan animate-bounce" />
-              <div class="absolute inset-0 opacity-10">
-                <div class="grid-lines w-full h-full" />
-              </div>
-              <div class="absolute bottom-3 text-xs text-stb-cyan font-mono">
-                {{ $t("contact.address") }}
+            <div class="h-40 w-full relative">
+              <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d14841.520977239106!2d39.1822348!3d21.6128916!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x15c3d0cf270b7863%3A0x79f15edcaedcadf7!2z2K3ZiiDYp9mE2LHYqNmI2Kkg2KzYr9ip!5e0!3m2!1sar!2ssa!4v1715764000000!5m2!1sar!2ssa"
+                class="absolute inset-0 w-full h-full border-0"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade"
+              ></iframe>
+
+              <div
+                class="absolute bottom-0 left-0 right-0 bg-stb-navy/80 backdrop-blur-sm py-1 text-center"
+              >
+                <div
+                  class="text-[10px] text-stb-cyan font-mono uppercase tracking-wider"
+                >
+                  {{ $t("contact.address") }}
+                </div>
               </div>
             </div>
           </div>

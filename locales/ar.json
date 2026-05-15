@@ -110,9 +110,9 @@
     "phone": "رقم الهاتف",
     "message": "رسالتك",
     "send": "إرسال الرسالة",
-    "address": "القاهرة، مصر",
-    "emailLabel": "info[at]stb-tech.com",
-    "phoneLabel": "+20 100 000 0000"
+    "address": "حي الربوة - جدة - السعودية",
+    "emailLabel": "info.stb.systems@gmail.com",
+    "phoneLabel": "+966 55 568 8143"
   },
   "quote": {
     "title": "اطلب عرض سعر",
@@ -126,12 +126,21 @@
     "requirements": "متطلبات المشروع",
     "features": "الميزات المطلوبة",
     "notes": "ملاحظات إضافية",
-    "generate": "إنشاء عرض السعر PDF",
+    "generate": "إنشاء عرض سعر PDF",
     "types": {
       "web": "موقع إلكتروني",
       "mobile": "تطبيق جوال",
       "system": "نظام متكامل",
       "ai": "حل ذكاء اصطناعي",
+      "hr_biometric": "الموارد البشرية والبصمة",
+      "erp": "أنظمة ERP",
+      "social": "تطبيقات التواصل",
+      "logistics": "الخدمات اللوجستية",
+      "news": "أخبار وصحافة",
+      "education": "تعليم",
+      "real_estate": "عقارات",
+      "tourism": "سياحة",
+      "b2b": "خدمات أعمال (B2B)",
       "other": "أخرى"
     },
     "budgets": {

@@ -114,7 +114,7 @@
                 <div class="orbit-dot orbit-dot-lg" />
               </div>
               <!-- Floating cards -->
-              <div class="float-card float-card-1 glass">
+              <!-- <div class="float-card float-card-1 glass">
                 <CheckCircle class="w-4 h-4 text-green-400" />
                 <span class="text-xs font-semibold">{{
                   $i18n.locale === "ar" ? "مشروع مكتمل" : "Project Done"
@@ -129,7 +129,7 @@
               <div class="float-card float-card-3 glass">
                 <Star class="w-4 h-4 text-yellow-400" />
                 <span class="text-xs font-semibold">4.9 / 5</span>
-              </div>
+              </div> -->
             </div>
           </div>
         </div>

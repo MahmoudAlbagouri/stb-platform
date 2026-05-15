@@ -110,13 +110,14 @@
     "phone": "Phone Number",
     "message": "Your Message",
     "send": "Send Message",
-    "address": "Cairo, Egypt",
-    "emailLabel": "info[at]stb-tech.com",
-    "phoneLabel": "+20 100 000 0000"
+    "address": "Ar Rabwah Dist., Jeddah, Saudi Arabia",
+    "emailLabel": "info.stb.systems@gmail.com",
+    "phoneLabel": "+966 55 568 8143"
   },
+
   "quote": {
     "title": "Request a Quote",
-    "subtitle": "Tell us about your project and we'll provide a customized offer",
+    "subtitle": "Tell us about your project and we will provide you with a customized offer",
     "clientName": "Client / Company Name",
     "clientEmail": "Email Address",
     "clientPhone": "Phone Number",
@@ -132,6 +133,15 @@
       "mobile": "Mobile App",
       "system": "Integrated System",
       "ai": "AI Solution",
+      "hr_biometric": "HR & Biometrics",
+      "erp": "ERP Systems",
+      "social": "Social Media",
+      "logistics": "Logistics",
+      "news": "News & Media",
+      "education": "Education",
+      "real_estate": "Real Estate",
+      "tourism": "Tourism",
+      "b2b": "B2B Solutions",
       "other": "Other"
     },
     "budgets": {
