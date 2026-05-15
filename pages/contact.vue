@@ -250,17 +250,26 @@ const contactInfo = [
   {
     icon: MapPin,
     label: { ar: "العنوان", en: "Address" },
-    value: { ar: "القاهرة، مصر", en: "Cairo, Egypt" },
+    value: {
+      ar: "حي الربوة - جدة - السعودية",
+      en: "Ar Rabwah Dist., Jeddah, Saudi Arabia",
+    },
   },
   {
     icon: Mail,
     label: { ar: "البريد الإلكتروني", en: "Email" },
-    value: { ar: "info@stb-tech.com", en: "info@stb-tech.com" },
+    value: {
+      ar: "info.stb.systems@gmail.com",
+      en: "info.stb.systems@gmail.com",
+    },
   },
   {
     icon: Phone,
     label: { ar: "الهاتف", en: "Phone" },
-    value: { ar: "+20 100 000 0000", en: "+20 100 000 0000" },
+    value: {
+      ar: "+966 55 568 8143",
+      en: "+966 55 568 8143",
+    },
   },
 ];
 
