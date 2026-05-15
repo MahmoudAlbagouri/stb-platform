@@ -96,6 +96,7 @@
             </li>
             <li
               class="flex items-center gap-3 text-sm text-[var(--text-secondary)]"
+              dir="ltr"
             >
               <Phone class="w-4 h-4 text-stb-cyan flex-shrink-0" />
               <a
