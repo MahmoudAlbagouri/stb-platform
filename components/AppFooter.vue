@@ -96,12 +96,12 @@
             </li>
             <li
               class="flex items-center gap-3 text-sm text-[var(--text-secondary)]"
-              dir="ltr"
             >
               <Phone class="w-4 h-4 text-stb-cyan flex-shrink-0" />
               <a
-                href="tel:+201000000000"
+                href="tel:+966 55 568 8143"
                 class="hover:text-stb-cyan transition-colors"
+                dir="ltr"
                 >{{ $t("contact.phoneLabel") }}</a
               >
             </li>
