@@ -1,15 +1,12 @@
 <template>
   <div>
-    <!-- ===== HERO SECTION ===== -->
     <section
       class="relative min-h-screen flex items-center overflow-hidden pt-24"
     >
-      <!-- Orbs -->
       <div class="orb orb-1" />
       <div class="orb orb-2" />
       <div class="orb orb-3" />
 
-      <!-- Rotating Ring -->
       <div
         class="absolute inset-0 flex items-center justify-end pointer-events-none overflow-hidden"
       >
@@ -22,7 +19,6 @@
 
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         <div class="grid lg:grid-cols-2 gap-16 items-center">
-          <!-- Text Content -->
           <div class="hero-content">
             <div
               class="tag mb-6 animate-slide-up"
@@ -70,9 +66,8 @@
               </NuxtLink>
             </div>
 
-            <!-- Download PDF Button (Static File) -->
             <button
-              class="download-btn flex items-center gap-3 text-sm animate-slide-up"
+              class="download-btn flex items-center gap-3 text-sm animate-slide-up mb-12"
               style="animation-delay: 0.5s; animation-fill-mode: both"
               @click="downloadStaticProfile"
             >
@@ -87,15 +82,43 @@
                 :class="$i18n.locale === 'ar' ? 'rotate-180' : ''"
               />
             </button>
+
+            <div
+              class="trusted-section animate-slide-up border-t border-white/5 pt-6"
+              style="animation-delay: 0.6s; animation-fill-mode: both"
+            >
+              <p
+                class="text-xs font-semibold tracking-wider text-[var(--text-secondary)] uppercase mb-4 opacity-85"
+              >
+                {{
+                  $i18n.locale === "ar"
+                    ? "شريك تكنولوجي موثوق لـ"
+                    : "Trusted Technology Partner For"
+                }}
+              </p>
+              <div class="flex items-center gap-6">
+                <div
+                  class="group relative flex items-center justify-center px-8 py-4 rounded-xl border border-white/20 bg-white shadow-xl animate-infinite-float max-w-[240px]"
+                >
+                  <div
+                    class="absolute inset-0 bg-stb-cyan/5 rounded-xl opacity-0 group-hover:opacity-100 blur-md transition-opacity duration-300"
+                  />
+
+                  <img
+                    src="/company.png"
+                    alt="Trusted Company"
+                    class="h-full w-auto object-contain opacity-100 transition-transform duration-300 group-hover:scale-105 relative z-10"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
 
-          <!-- Hero Visual -->
           <div
             class="hidden lg:flex items-center justify-center relative animate-fade-in"
             style="animation-delay: 0.6s; animation-fill-mode: both"
           >
             <div class="hero-globe">
-              <!-- Central logo -->
               <div class="globe-core animate-pulse-glow">
                 <img
                   src="/logo.png"
@@ -103,7 +126,6 @@
                   class="w-28 h-28 object-contain"
                 />
               </div>
-              <!-- Orbiting dots -->
               <div class="orbit-ring orbit-1">
                 <div class="orbit-dot" />
               </div>
@@ -113,29 +135,11 @@
               <div class="orbit-ring orbit-3">
                 <div class="orbit-dot orbit-dot-lg" />
               </div>
-              <!-- Floating cards -->
-              <!-- <div class="float-card float-card-1 glass">
-                <CheckCircle class="w-4 h-4 text-green-400" />
-                <span class="text-xs font-semibold">{{
-                  $i18n.locale === "ar" ? "مشروع مكتمل" : "Project Done"
-                }}</span>
-              </div>
-              <div class="float-card float-card-2 glass">
-                <TrendingUp class="w-4 h-4 text-stb-cyan" />
-                <span class="text-xs font-semibold"
-                  >+{{ $i18n.locale === "ar" ? "٢٠٠" : "200" }}%</span
-                >
-              </div>
-              <div class="float-card float-card-3 glass">
-                <Star class="w-4 h-4 text-yellow-400" />
-                <span class="text-xs font-semibold">4.9 / 5</span>
-              </div> -->
             </div>
           </div>
         </div>
       </div>
 
-      <!-- Scroll Indicator -->
       <div
         class="absolute bottom-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 animate-bounce"
       >
@@ -147,7 +151,6 @@
       </div>
     </section>
 
-    <!-- ===== STATS SECTION ===== -->
     <section class="py-16 relative">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
@@ -168,7 +171,6 @@
       </div>
     </section>
 
-    <!-- ===== SERVICES SECTION ===== -->
     <section class="py-20 relative" id="services">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-14 reveal">
@@ -219,7 +221,6 @@
       </div>
     </section>
 
-    <!-- ===== WHY US SECTION ===== -->
     <section class="py-20 relative overflow-hidden">
       <div
         class="absolute inset-0 bg-gradient-to-r from-stb-blue/5 to-stb-cyan/5 pointer-events-none"
@@ -261,7 +262,6 @@
               </div>
             </div>
           </div>
-          <!-- Tech Stack Visual -->
           <div class="reveal">
             <div class="tech-grid">
               <div
@@ -281,7 +281,6 @@
       </div>
     </section>
 
-    <!-- ===== BLOG SECTION ===== -->
     <section class="py-20 relative">
       <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div class="text-center mb-14 reveal">
@@ -366,7 +365,6 @@
       </div>
     </section>
 
-    <!-- ===== CTA SECTION ===== -->
     <section class="py-20 relative">
       <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center reveal">
         <div class="glass rounded-3xl p-12 relative overflow-hidden">
@@ -418,13 +416,10 @@ import {
   Download,
   ArrowRight,
   ChevronDown,
-  CheckCircle,
   TrendingUp,
-  Star,
   Layers,
   Shield,
   BookOpen,
-  Globe2,
   Code2,
   Smartphone,
   Cloud,
@@ -438,20 +433,19 @@ import {
   Target,
   Award,
   Headphones,
-  // أيقونات جديدة للخدمات المضافة
-  Database, // للـ ERP
-  Fingerprint, // للبصمة والموارد البشرية
-  GraduationCap, // للتعليم
-  Newspaper, // للأخبار
-  Truck, // للوجستيات
-  Users, // للتواصل الاجتماعي
-  Briefcase, // للـ B2B
-  Plane, // للسياحة
-  Home, // للعقارات
+  Database,
+  Fingerprint,
+  GraduationCap,
+  Newspaper,
+  Truck,
+  Users,
+  Briefcase,
+  Plane,
+  Home,
 } from "lucide-vue-next";
 
 const localePath = useLocalePath();
-const { t } = useI18n(); // تأكد من استيراد useI18n إذا كنت تستخدمها للوصول للنصوص مباشرة، وإلا فالمفاتيح تكفي
+const { t } = useI18n();
 
 const activeService = ref(null);
 
@@ -462,13 +456,8 @@ const stats = [
   { value: "15+", label: "stats.countries" },
 ];
 
-// تم تحديث قائمة الخدمات لتشمل جميع النقاط المطلوبة
 const services = [
-  {
-    icon: Code2,
-    titleKey: "services.web.title",
-    descKey: "services.web.desc",
-  },
+  { icon: Code2, titleKey: "services.web.title", descKey: "services.web.desc" },
   {
     icon: Smartphone,
     titleKey: "services.mobile.title",
@@ -524,11 +513,7 @@ const services = [
     titleKey: "services.cloud.title",
     descKey: "services.cloud.desc",
   },
-  {
-    icon: Brain,
-    titleKey: "services.ai.title",
-    descKey: "services.ai.desc",
-  },
+  { icon: Brain, titleKey: "services.ai.title", descKey: "services.ai.desc" },
   {
     icon: Lock,
     titleKey: "services.security.title",
@@ -546,7 +531,7 @@ const whyUs = [
     icon: Target,
     title: { ar: "دقة في التنفيذ", en: "Precision Execution" },
     desc: {
-      ar: "نلتزم بكل تفاصيل  مشروعك لضمان أعلى جودة ممكنة",
+      ar: "نلتزم بكل تفاصيل مشروعك لضمان أعلى جودة ممكنة",
       en: "We commit to every detail of your project to ensure the highest possible quality",
     },
   },
@@ -615,7 +600,6 @@ const blogPosts = [
   },
 ];
 
-// Reveal on scroll
 onMounted(() => {
   const observer = new IntersectionObserver(
     (entries) =>
@@ -627,13 +611,11 @@ onMounted(() => {
   document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
 });
 
-// Download Static Company Profile PDF
 const downloadStaticProfile = () => {
-  // تأكد من وجود الملف باسم STB-Profile.pdf في مجلد public/
   const fileName = "STB-Profile.pdf";
   const link = document.createElement("a");
   link.href = `/${fileName}`;
-  link.download = fileName; // يجبر المتصفح على التحميل
+  link.download = fileName;
   document.body.appendChild(link);
   link.click();
   document.body.removeChild(link);
@@ -641,6 +623,23 @@ const downloadStaticProfile = () => {
 </script>
 
 <style scoped>
+/* Permanent Floating Animation for the Company Logo Wrapper */
+.animate-infinite-float {
+  animation: floatCompany 5s ease-in-out infinite;
+}
+
+@keyframes floatCompany {
+  0% {
+    transform: translateY(0px);
+  }
+  50% {
+    transform: translateY(-6px);
+  }
+  100% {
+    transform: translateY(0px);
+  }
+}
+
 /* Hero Globe */
 .hero-globe {
   position: relative;
@@ -720,34 +719,6 @@ const downloadStaticProfile = () => {
   box-shadow: 0 0 20px var(--stb-blue-bright);
 }
 
-.float-card {
-  position: absolute;
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 14px;
-  border-radius: 12px;
-  color: var(--text-primary);
-  font-size: 12px;
-  animation: float 4s ease-in-out infinite;
-}
-
-.float-card-1 {
-  top: 10%;
-  right: 5%;
-  animation-delay: 0s;
-}
-.float-card-2 {
-  bottom: 15%;
-  right: 0%;
-  animation-delay: -1.5s;
-}
-.float-card-3 {
-  top: 50%;
-  left: 0;
-  animation-delay: -3s;
-}
-
 /* Ring decorations */
 .ring-container {
   position: relative;
@@ -781,7 +752,6 @@ const downloadStaticProfile = () => {
   grid-template-columns: repeat(3, 1fr);
   gap: 12px;
 }
-
 .tech-item {
   transition: all 0.3s ease;
 }
