@@ -3,13 +3,11 @@
     class="min-h-screen bg-slate-100 py-8 print:bg-white print:py-0 print:min-h-0"
     dir="rtl"
   >
+    <!-- Print Controls -->
     <div
       class="max-w-[21cm] mx-auto mb-4 px-4 flex justify-between items-center print:hidden"
     >
-      <div class="text-sm text-slate-500 font-medium">
-        ✨ تم الانتقال إلى حقول متمددة تلقائياً (ContentEditable) لضمان ظهور
-        كامل النص عند الطباعة.
-      </div>
+      <div class="text-sm text-slate-500 font-medium"></div>
 
       <button
         @click="printQuotation"
@@ -33,35 +31,73 @@
       </button>
     </div>
 
+    <!-- Main Quotation Card -->
     <div
       id="quotation-card"
       class="bg-white p-10 max-w-[25cm] min-h-[29.7cm] mx-auto shadow-xl border border-slate-200/80 rounded-sm relative print:shadow-none print:border-none print:p-0 print:max-w-full print:w-full print:min-h-0"
     >
+      <!-- Header Section -->
       <div
         class="flex justify-between items-center border-b-2 border-slate-200 pb-6 mb-6"
       >
+        <!-- Company Info (Right) -->
         <div class="space-y-1 flex-1">
           <div
             contenteditable="true"
-            @input="company.name = $event.target.innerText"
+            @compositionstart="composing = true"
+            @compositionend="
+              composing = false;
+              company.name = $event.target.innerText;
+            "
+            @blur="company.name = $event.target.innerText"
             class="editable-input text-2xl font-black text-slate-800 w-full min-w-[100px]"
           >
             {{ company.name }}
           </div>
           <div
             contenteditable="true"
-            @input="company.subName = $event.target.innerText"
+            @compositionstart="composing = true"
+            @compositionend="
+              composing = false;
+              company.subName = $event.target.innerText;
+            "
+            @blur="company.subName = $event.target.innerText"
             class="editable-input text-sm text-blue-600 font-bold w-full min-w-[100px]"
           >
             {{ company.subName }}
           </div>
+
+          <!-- New Location Line -->
+          <div
+            class="flex items-center text-xs text-slate-600 font-semibold gap-1 mt-1"
+          >
+            <span class="whitespace-nowrap text-slate-400">المقر:</span>
+            <div
+              contenteditable="true"
+              @compositionstart="composing = true"
+              @compositionend="
+                composing = false;
+                company.location = $event.target.innerText;
+              "
+              @blur="company.location = $event.target.innerText"
+              class="editable-input font-medium text-slate-700 min-w-[100px]"
+            >
+              {{ company.location }}
+            </div>
+          </div>
+
           <div
             class="flex items-center text-xs text-slate-500 font-semibold gap-1 mt-1"
           >
             <span class="whitespace-nowrap">السجل التجاري:</span>
             <div
               contenteditable="true"
-              @input="company.crNumber = $event.target.innerText"
+              @compositionstart="composing = true"
+              @compositionend="
+                composing = false;
+                company.crNumber = $event.target.innerText;
+              "
+              @blur="company.crNumber = $event.target.innerText"
               class="editable-input w-36 font-mono text-slate-700 min-w-[50px]"
             >
               {{ company.crNumber }}
@@ -69,6 +105,7 @@
           </div>
         </div>
 
+        <!-- Logo & Quote No (Center) -->
         <div
           class="text-center space-y-3 px-4 flex flex-col items-center flex-1"
         >
@@ -83,41 +120,62 @@
           </div>
           <div
             contenteditable="true"
-            @input="quotationNumber = $event.target.innerText"
+            @compositionstart="composing = true"
+            @compositionend="
+              composing = false;
+              quotationNumber = $event.target.innerText;
+            "
+            @blur="quotationNumber = $event.target.innerText"
             class="editable-input text-center text-xs bg-slate-100 font-mono font-bold text-slate-700 px-3 py-1 rounded-md border border-slate-200 w-36 min-w-[80px]"
           >
             {{ quotationNumber }}
           </div>
         </div>
 
+        <!-- Contact Info (Left) -->
         <div
           class="text-left text-xs text-slate-500 space-y-1.5 flex-1 flex flex-col items-end"
         >
-          <div class="flex items-center gap-1">
+          <div class="flex fff items-center gap-1">
             <span class="text-slate-400 whitespace-nowrap">التاريخ:</span>
             <div
               contenteditable="true"
-              @input="date = $event.target.innerText"
+              @compositionstart="composing = true"
+              @compositionend="
+                composing = false;
+                date = $event.target.innerText;
+              "
+              @blur="date = $event.target.innerText"
               class="editable-input font-mono text-left w-28 font-semibold text-slate-700 min-w-[60px]"
             >
               {{ date }}
             </div>
           </div>
-          <div class="flex items-center gap-1">
+          <div class="flex fff items-center gap-1">
             <span class="text-slate-400 whitespace-nowrap">الموقع:</span>
             <div
               contenteditable="true"
-              @input="company.website = $event.target.innerText"
-              class="editable-input font-mono text-blue-600 font-medium text-left w-36 min-w-[80px]"
+              @compositionstart="composing = true"
+              @compositionend="
+                composing = false;
+                company.website = $event.target.innerText;
+              "
+              @blur="company.website = $event.target.innerText"
+              class="editable-input font-mono text-blue-600 font-medium text-left w-40 min-w-[80px] break-all"
             >
               {{ company.website }}
             </div>
           </div>
-          <div class="flex items-center gap-1">
+          <div class="flex fff items-center gap-1">
             <span class="text-slate-400 whitespace-nowrap">الجوال:</span>
             <div
               contenteditable="true"
-              @input="company.phone = $event.target.innerText"
+              @compositionstart="composing = true"
+              @compositionend="
+                composing = false;
+                company.phone = $event.target.innerText;
+              "
+              @blur="company.phone = $event.target.innerText"
               class="editable-input font-mono text-left w-28 text-slate-700 min-w-[60px]"
             >
               {{ company.phone }}
@@ -126,8 +184,16 @@
         </div>
       </div>
 
+      <!-- Intro Sentence -->
+      <div class="mb-6 text-center">
+        <p class="text-lg font-bold text-slate-700">
+          نتشرف بتقديم عرض السعر التالي لمنشاتكم الموقرة
+        </p>
+      </div>
+
+      <!-- Customer Section Only (Sender Removed) -->
       <div
-        class="grid grid-cols-2 gap-6 bg-slate-50 p-5 rounded-xl mb-6 border border-slate-200/60 text-sm"
+        class="grid grid-cols-1 gap-6 bg-slate-50 p-5 rounded-xl mb-6 border border-slate-200/60 text-sm"
       >
         <div class="space-y-1.5">
           <p class="text-xs text-blue-600 font-bold tracking-wide uppercase">
@@ -135,7 +201,12 @@
           </p>
           <div
             contenteditable="true"
-            @input="customer.name = $event.target.innerText"
+            @compositionstart="composing = true"
+            @compositionend="
+              composing = false;
+              customer.name = $event.target.innerText;
+            "
+            @blur="customer.name = $event.target.innerText"
             class="editable-input font-extrabold text-slate-800 w-full text-base block leading-normal min-h-[1.5em]"
             placeholder="اسم الشركة أو العميل"
           >
@@ -146,7 +217,12 @@
             <span class="text-slate-400 whitespace-nowrap">الجوال:</span>
             <div
               contenteditable="true"
-              @input="customer.mobile = $event.target.innerText"
+              @compositionstart="composing = true"
+              @compositionend="
+                composing = false;
+                customer.mobile = $event.target.innerText;
+              "
+              @blur="customer.mobile = $event.target.innerText"
               class="editable-input font-mono bg-transparent w-full font-semibold text-slate-700 min-w-[80px]"
             >
               {{ customer.mobile }}
@@ -156,41 +232,21 @@
             <span class="text-slate-400 whitespace-nowrap">كود العميل:</span>
             <div
               contenteditable="true"
-              @input="customer.id = $event.target.innerText"
+              @compositionstart="composing = true"
+              @compositionend="
+                composing = false;
+                customer.id = $event.target.innerText;
+              "
+              @blur="customer.id = $event.target.innerText"
               class="editable-input font-mono bg-transparent w-full font-bold min-w-[40px]"
             >
               {{ customer.id }}
             </div>
           </div>
         </div>
-        <div class="text-right space-y-1.5 border-r-2 border-slate-200 pr-5">
-          <p class="text-xs text-slate-400 font-bold tracking-wide uppercase">
-            المرسل / Sender
-          </p>
-          <div
-            contenteditable="true"
-            @input="company.brandName = $event.target.innerText"
-            class="editable-input font-bold text-slate-800 w-full bg-transparent min-w-[100px]"
-          >
-            {{ company.brandName }}
-          </div>
-          <div
-            contenteditable="true"
-            @input="company.address = $event.target.innerText"
-            class="editable-input text-xs text-slate-600 w-full bg-transparent font-medium min-w-[100px]"
-          >
-            {{ company.address }}
-          </div>
-          <div
-            contenteditable="true"
-            @input="company.email = $event.target.innerText"
-            class="editable-input text-xs font-mono text-slate-400 w-full bg-transparent min-w-[100px]"
-          >
-            {{ company.email }}
-          </div>
-        </div>
       </div>
 
+      <!-- Title -->
       <div class="text-center my-8">
         <h2
           class="text-xl font-black text-slate-800 border-b-2 border-slate-800 inline-block pb-1.5 px-12 uppercase tracking-wide"
@@ -199,6 +255,7 @@
         </h2>
       </div>
 
+      <!-- Items Table -->
       <div class="overflow-x-auto mb-3 no-scrollbar">
         <table
           class="w-full text-right border-collapse border border-slate-300 shadow-sm rounded-sm table-fixed"
@@ -249,7 +306,12 @@
               >
                 <div
                   contenteditable="true"
-                  @input="item.nameEn = $event.target.innerText"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    item.nameEn = $event.target.innerText;
+                  "
+                  @blur="item.nameEn = $event.target.innerText"
                   class="editable-input font-bold text-slate-800 leading-relaxed w-full outline-none block min-h-[1.2em]"
                   placeholder="English Description"
                 >
@@ -257,7 +319,12 @@
                 </div>
                 <div
                   contenteditable="true"
-                  @input="item.nameAr = $event.target.innerText"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    item.nameAr = $event.target.innerText;
+                  "
+                  @blur="item.nameAr = $event.target.innerText"
                   class="editable-input text-slate-600 font-medium leading-relaxed w-full outline-none block min-h-[1.2em]"
                   placeholder="الوصف باللغة العربية"
                 >
@@ -270,7 +337,12 @@
               >
                 <div
                   contenteditable="true"
-                  @input="item.code = $event.target.innerText"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    item.code = $event.target.innerText;
+                  "
+                  @blur="item.code = $event.target.innerText"
                   class="editable-input text-center text-slate-600 w-full font-medium break-all"
                 >
                   {{ item.code }}
@@ -281,7 +353,12 @@
               >
                 <div
                   contenteditable="true"
-                  @input="parseNumber($event, item, 'quantity')"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    !composing && parseNumber($event, item, 'quantity');
+                  "
+                  @blur="parseNumber($event, item, 'quantity')"
                   class="editable-input text-center w-full font-bold"
                 >
                   {{ item.quantity }}
@@ -292,7 +369,12 @@
               >
                 <div
                   contenteditable="true"
-                  @input="parseNumber($event, item, 'unitPrice')"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    !composing && parseNumber($event, item, 'unitPrice');
+                  "
+                  @blur="parseNumber($event, item, 'unitPrice')"
                   class="editable-input text-left w-full font-semibold"
                 >
                   {{ item.unitPrice }}
@@ -303,7 +385,12 @@
               >
                 <div
                   contenteditable="true"
-                  @input="parseNumber($event, item, 'discount')"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    !composing && parseNumber($event, item, 'discount');
+                  "
+                  @blur="parseNumber($event, item, 'discount')"
                   class="editable-input text-left w-full text-red-600"
                 >
                   {{ item.discount }}
@@ -313,7 +400,12 @@
                 <div class="flex items-center gap-0.5 justify-end">
                   <div
                     contenteditable="true"
-                    @input="parseNumber($event, item, 'vat')"
+                    @compositionstart="composing = true"
+                    @compositionend="
+                      composing = false;
+                      !composing && parseNumber($event, item, 'vat');
+                    "
+                    @blur="parseNumber($event, item, 'vat')"
                     class="editable-input text-left w-10 text-slate-700"
                   >
                     {{ item.vat }}
@@ -348,31 +440,61 @@
         + إضافة منتج / خدمة جديدة
       </button>
 
+      <!-- Footer Grid: Bank/Terms & Totals -->
       <div class="grid grid-cols-12 gap-6 items-start mt-2">
+        <!-- Left Column: Banks & Terms -->
         <div class="col-span-7 space-y-4 text-[11px] text-slate-600">
+          <!-- Dynamic Bank Accounts -->
           <div
             class="border border-slate-200 p-3.5 rounded-xl bg-slate-50/50 shadow-sm border-dashed"
           >
-            <h4
-              class="font-bold text-blue-700 mb-2 pb-1 border-b border-slate-200 flex items-center gap-1.5"
+            <div
+              class="flex justify-between items-center border-b border-slate-200 pb-1 mb-2"
             >
-              <span>🏦 الحسابات البنكية المعتمدة:</span>
-            </h4>
+              <h4 class="font-bold text-blue-700 flex items-center gap-1.5">
+                <span>🏦 الحسابات البنكية المعتمدة:</span>
+              </h4>
+              <button
+                @click="addBankAccount"
+                class="print:hidden text-[10px] text-blue-600 font-bold hover:underline"
+              >
+                + إضافة حساب
+              </button>
+            </div>
+
             <div
               v-for="(bank, bIdx) in bankAccounts"
               :key="bIdx"
-              class="mb-2.5 last:mb-0 space-y-0.5"
+              class="mb-3 last:mb-0 space-y-0.5 group relative pr-2"
             >
-              <div
-                contenteditable="true"
-                @input="bank.name = $event.target.innerText"
-                class="editable-input font-bold text-slate-700 w-full p-0"
-              >
-                {{ bank.name }}
+              <div class="flex justify-between">
+                <div
+                  contenteditable="true"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    bank.name = $event.target.innerText;
+                  "
+                  @blur="bank.name = $event.target.innerText"
+                  class="editable-input font-bold text-slate-700 w-full p-0"
+                >
+                  {{ bank.name }}
+                </div>
+                <button
+                  @click="removeBankAccount(bIdx)"
+                  class="text-red-500 hover:text-red-700 hidden group-hover:block print:hidden font-bold text-[10px] mr-2"
+                >
+                  حذف
+                </button>
               </div>
               <div
                 contenteditable="true"
-                @input="bank.iban = $event.target.innerText"
+                @compositionstart="composing = true"
+                @compositionend="
+                  composing = false;
+                  bank.iban = $event.target.innerText;
+                "
+                @blur="bank.iban = $event.target.innerText"
                 class="editable-input font-mono text-slate-900 select-all w-full tracking-wider p-0 text-xs font-semibold"
               >
                 {{ bank.iban }}
@@ -380,6 +502,7 @@
             </div>
           </div>
 
+          <!-- Terms -->
           <div class="space-y-1.5">
             <h4 class="font-bold text-slate-800 text-xs">
               📜 الشروط والأحكام:
@@ -395,7 +518,12 @@
                 >
                 <div
                   contenteditable="true"
-                  @input="terms[tIdx] = $event.target.innerText"
+                  @compositionstart="composing = true"
+                  @compositionend="
+                    composing = false;
+                    terms[tIdx] = $event.target.innerText;
+                  "
+                  @blur="terms[tIdx] = $event.target.innerText"
                   class="editable-input flex-1 text-slate-600 bg-transparent py-0 focus:bg-white"
                 >
                   {{ terms[tIdx] }}
@@ -417,6 +545,7 @@
           </div>
         </div>
 
+        <!-- Right Column: Totals -->
         <div
           class="col-span-5 text-xs space-y-3 border border-slate-300 rounded-xl p-4 bg-slate-50/80 shadow-inner"
         >
@@ -452,36 +581,39 @@
         </div>
       </div>
 
+      <!-- Thank You Note -->
+      <div class="mt-8 text-center">
+        <p class="text-sm font-bold text-slate-600">
+          شاكرين لكم ثقتكم ونتطلع للتعاون معكم
+        </p>
+      </div>
+
+      <!-- Signatures & Maroof -->
       <div
-        class="mt-16 pt-6 border-t-2 border-slate-200 grid grid-cols-3 items-center gap-4 text-center"
+        class="mt-8 pt-6 border-t-2 border-slate-200 grid grid-cols-3 items-center gap-4 text-center"
       >
-        <div class="flex flex-col items-center justify-center space-y-1">
+        <!-- Maroof Section (Enlarged & Text Changed) -->
+        <div class="flex flex-col items-center justify-center space-y-2">
           <div
-            class="h-14 flex items-center justify-center overflow-hidden p-1"
+            class="h-24 w-full flex items-center justify-center overflow-hidden p-2"
           >
             <img
               :src="company.maroofLogoUrl"
-              alt="معروف والمركز السعودي للأعمال"
-              class="max-h-full object-contain"
+              alt="موثوق لدى معروف"
+              class="max-h-full max-w-full object-contain scale-125"
             />
           </div>
           <div
-            class="flex items-center justify-center gap-1 bg-slate-100 text-slate-700 px-2 py-0.5 rounded border border-slate-200 font-mono text-[10px] font-bold shadow-sm"
+            class="flex items-center justify-center gap-1 bg-slate-100 text-slate-700 px-3 py-1 rounded border border-slate-200 font-mono text-xs font-bold shadow-sm"
           >
-            <span>رقم معروف:</span>
-            <div
-              contenteditable="true"
-              @input="company.maroofId = $event.target.innerText"
-              class="bg-transparent text-center font-bold font-mono w-14 outline-none border-none p-0 focus:ring-0"
-            >
-              {{ company.maroofId }}
-            </div>
+            <span>موثوق لدى معروف</span>
           </div>
         </div>
 
+        <!-- Stamp -->
         <div class="flex flex-col items-center justify-center space-y-1">
           <div
-            class="w-16 h-16 bg-slate-50/50 rounded-full border border-slate-200 border-dashed flex items-center justify-center text-[10px] text-slate-300"
+            class="w-20 h-20 bg-slate-50/50 rounded-full border border-slate-200 border-dashed flex items-center justify-center text-[10px] text-slate-300"
           >
             [محل الختم]
           </div>
@@ -491,6 +623,7 @@
           >
         </div>
 
+        <!-- Signature -->
         <div class="flex flex-col items-center justify-center space-y-3">
           <span class="text-xs text-slate-700 font-extrabold"
             >التوقيع والختم المعتمد</span
@@ -508,15 +641,18 @@ definePageMeta({
   layout: "blank",
 });
 
+// متغير لتتبع حالة الكتابة المركبة (IME) للعربية
+const composing = ref(false);
+
 const company = ref({
   name: "Smart Tech Business",
   subName: "التقنية الذكية للأعمال",
-  brandName: "Smart Technology For Business (STB)",
+  brandName: "Smart Technology For business (STB)",
   crNumber: "7053885393",
-  website: "www.stbsa.co",
+  website: "stblink.com", // Updated URL
   email: "info@stbsa.co",
   phone: "0555688143",
-  address: "جدة _ المملكة العربية السعودية",
+  location: "جدة حي الربوة", // Added Location
   maroofId: "37240",
   logoUrl: "https://stbsa.co/storage/logo.png",
   maroofLogoUrl: "https://stbsa.co/storage/s.png",
@@ -553,10 +689,21 @@ const items = ref([
   },
 ]);
 
+// Dynamic Bank Accounts
 const bankAccounts = ref([
   { name: "الأهلي السعودي", iban: "SA4710000001400035729003" },
   { name: "مصرف الإنماء", iban: "SA3605000068207272169000" },
 ]);
+
+const addBankAccount = () => {
+  bankAccounts.value.push({ name: "", iban: "" });
+};
+
+const removeBankAccount = (index) => {
+  if (bankAccounts.value.length > 1) {
+    bankAccounts.value.splice(index, 1);
+  }
+};
 
 const terms = ref([
   "ضمان الجهاز 3 سنوات عند الوكيل.",
@@ -564,7 +711,7 @@ const terms = ref([
   "البرنامج يعمل مجاناً لمدة 6 أشهر وبعد ذلك يكون باشتراك سنوي بقيمة 500 ريال.",
 ]);
 
-// دالة لمعالجة إدخال الأرقام من عناصر contenteditable وحفظها بشكل صحيح كمقادير رياضية
+// Helper to parse numbers from contenteditable
 const parseNumber = (event, item, key) => {
   const value = parseFloat(event.target.innerText.replace(/[^0-9.]/g, ""));
   item[key] = isNaN(value) ? 0 : value;
@@ -640,6 +787,11 @@ const printQuotation = () => {
   border-radius: 6px;
   transition: all 0.15s ease-in-out;
   background-color: transparent;
+  color: rgb(31, 31, 31);
+}
+.fff {
+  justify-content: space-between;
+  width: 75%;
 }
 .editable-input:hover {
   border-color: #cbd5e1;
@@ -652,7 +804,7 @@ const printQuotation = () => {
   box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15) !important;
 }
 
-/* نمط لإظهار placeholder وهمي لعناصر contenteditable الفارغة */
+/* Placeholder for empty contenteditable */
 [contenteditable="true"]:empty:before {
   content: attr(placeholder);
   color: #94a3b8;
