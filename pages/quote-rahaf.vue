@@ -654,8 +654,8 @@ const company = ref({
   phone: "0555688143",
   location: "جدة حي الربوة", // Added Location
   maroofId: "37240",
-  logoUrl: "https://stbsa.co/storage/logo.png",
-  maroofLogoUrl: "https://stbsa.co/storage/s.png",
+  logoUrl: "https://www.stblink.com/logo.png",
+  maroofLogoUrl: "https://www.stblink.com/company.png",
 });
 
 const quotationNumber = ref("QP-2026-00034");
