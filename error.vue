@@ -1,6 +1,7 @@
 <template>
   <div class="min-h-screen flex items-center justify-center px-4" :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'">
-    <div class="text-center max-w-lg">
+    <SceneBackground />
+    <div class="text-center max-w-lg relative z-10">
       <!-- Glitch Number -->
       <div class="glitch-404 mb-6" data-text="404">404</div>
 
@@ -21,11 +22,11 @@
       </p>
 
       <div class="flex flex-wrap justify-center gap-4">
-        <NuxtLink :to="localePath('/')" class="btn-primary flex items-center gap-2">
+        <NuxtLink :to="localePath('/')" class="btn-primary gap-2">
           <Home class="w-4 h-4" />
           {{ $i18n.locale === 'ar' ? 'الصفحة الرئيسية' : 'Go Home' }}
         </NuxtLink>
-        <NuxtLink :to="localePath('/contact')" class="btn-outline flex items-center gap-2">
+        <NuxtLink :to="localePath('/contact')" class="btn-outline gap-2">
           <Mail class="w-4 h-4" />
           {{ $i18n.locale === 'ar' ? 'تواصل معنا' : 'Contact Us' }}
         </NuxtLink>
@@ -51,7 +52,7 @@ defineProps({ error: Object })
   -webkit-text-fill-color: transparent;
   position: relative;
   display: inline-block;
-  animation: pulse-glow 3s ease-in-out infinite;
+  filter: drop-shadow(0 0 30px rgba(0, 212, 255, 0.35));
 }
 
 .glitch-404::before,

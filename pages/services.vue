@@ -1,109 +1,93 @@
 <template>
-  <div class="pt-28 pb-20">
-    <!-- Page Header -->
-    <section class="relative py-20 overflow-hidden">
-      <div
-        class="absolute inset-0 bg-gradient-to-br from-stb-blue/5 to-stb-cyan/5"
-      />
-      <div
-        class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center relative z-10"
-      >
-        <div class="tag mb-6 inline-flex">
-          <Layers class="w-3 h-3 me-1.5" />
-          {{ $t("services.title") }}
-        </div>
-        <h1 class="section-title mb-4">
-          <span class="gradient-text">{{ $t("services.title") }}</span>
-        </h1>
-        <div class="section-divider" />
-        <p class="text-[var(--text-secondary)] mt-6 max-w-2xl mx-auto text-lg">
-          {{ $t("services.subtitle") }}
-        </p>
-      </div>
-    </section>
+  <div class="pt-24 pb-20">
+    <PageHeader
+      :icon="Layers"
+      :tag-text="$t('services.title')"
+      :title="$t('services.title')"
+      :subtitle="$t('services.subtitle')"
+      variant="services"
+    />
 
     <!-- Services Grid -->
     <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div class="grid sm:grid-cols-2 lg:grid-cols-3 gap-7">
         <div
           v-for="(service, i) in services"
-          :key="i"
-          class="gradient-border p-8 card-hover reveal group"
-          :style="`animation-delay:${i * 0.05}s`"
+          :key="service.titleKey"
+          v-reveal="(i % 3) * 0.08"
         >
-          <div class="service-icon-wrap w-16 h-16 mb-5">
-            <component :is="service.icon" class="w-8 h-8 text-stb-cyan" />
-          </div>
-          <h3 class="text-xl font-bold text-[var(--text-primary)] mb-3">
-            {{ $t(service.titleKey) }}
-          </h3>
-          <p
-            class="text-[var(--text-secondary)] leading-relaxed mb-5 text-sm min-h-[40px]"
-          >
-            {{ $t(service.descKey) }}
-          </p>
+          <div v-tilt="6" class="gradient-border card-3d p-8 group h-full flex flex-col">
+            <div class="flex items-start justify-between">
+              <div class="service-icon-wrap w-16 h-16 mb-5">
+                <component :is="service.icon" class="w-8 h-8 text-stb-cyan" />
+              </div>
+              <span class="font-mono text-xs tracking-widest text-[var(--text-secondary)] opacity-50 group-hover:opacity-100 group-hover:text-stb-cyan transition">
+                {{ String(i + 1).padStart(2, "0") }}
+              </span>
+            </div>
+            <h3 class="text-xl font-bold text-[var(--text-primary)] mb-3">
+              {{ $t(service.titleKey) }}
+            </h3>
+            <p class="text-[var(--text-secondary)] leading-relaxed mb-5 text-sm min-h-[40px]">
+              {{ $t(service.descKey) }}
+            </p>
 
-          <!-- Features List -->
-          <ul class="space-y-2 mb-6">
-            <li
-              v-for="(feat, j) in service.features[$i18n.locale]"
-              :key="j"
-              class="flex items-start gap-2 text-xs text-[var(--text-secondary)]"
+            <ul class="space-y-2.5 mb-7">
+              <li
+                v-for="(feat, j) in service.features[$i18n.locale]"
+                :key="j"
+                class="feature-item flex items-start gap-2 text-xs text-[var(--text-secondary)]"
+                :style="{ '--d': `${j * 0.05}s` }"
+              >
+                <CheckCircle class="w-3.5 h-3.5 text-stb-cyan flex-shrink-0 mt-0.5" />
+                <span>{{ feat }}</span>
+              </li>
+            </ul>
+
+            <NuxtLink
+              :to="localePath('/contact')"
+              class="btn-primary mt-auto text-sm gap-2 w-full"
             >
-              <CheckCircle
-                class="w-3.5 h-3.5 text-stb-cyan flex-shrink-0 mt-0.5"
-              />
-              <span>{{ feat }}</span>
-            </li>
-          </ul>
-
-          <NuxtLink
-            :to="localePath('/contact')"
-            class="btn-primary text-sm inline-flex items-center gap-2 w-full justify-center"
-          >
-            {{ $i18n.locale === "ar" ? "استفسر الآن" : "Enquire Now" }}
-            <ArrowRight
-              class="w-4 h-4"
-              :class="$i18n.locale === 'ar' ? 'rotate-180' : ''"
-            />
-          </NuxtLink>
+              {{ isAr ? "استفسر الآن" : "Enquire Now" }}
+              <ArrowRight class="w-4 h-4" :class="isAr ? 'rotate-180' : ''" />
+            </NuxtLink>
+          </div>
         </div>
       </div>
     </section>
 
     <!-- Process Section -->
-    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-      <div class="text-center mb-14 reveal">
-        <h2 class="section-title mb-2">
-          <span class="gradient-text">{{
-            $i18n.locale === "ar" ? "كيف نعمل؟" : "How We Work"
-          }}</span>
+    <section class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24">
+      <div v-reveal class="text-center mb-16">
+        <span class="section-eyebrow">{{ isAr ? "منهجيتنا" : "Our process" }}</span>
+        <h2 class="section-title mt-3 mb-2">
+          <span class="gradient-text">{{ isAr ? "كيف نعمل؟" : "How We Work" }}</span>
         </h2>
         <div class="section-divider" />
       </div>
-      <div class="grid md:grid-cols-4 gap-6">
+
+      <div class="process relative grid md:grid-cols-4 gap-10 md:gap-6">
+        <div v-reveal:fade class="process__line hidden md:block" aria-hidden="true" />
         <div
           v-for="(step, i) in process"
           :key="i"
-          class="text-center reveal"
-          :style="`animation-delay:${i * 0.15}s`"
+          v-reveal="0.15 + i * 0.15"
+          class="text-center group relative"
         >
           <div class="relative mb-6 inline-flex">
-            <div
-              class="w-16 h-16 rounded-2xl glass border border-stb-cyan/20 flex items-center justify-center"
-            >
+            <div class="process__icon glass">
               <component :is="step.icon" class="w-7 h-7 text-stb-cyan" />
             </div>
             <div
-              class="absolute -top-2 -end-2 w-6 h-6 rounded-full bg-gradient-to-br from-stb-blue to-stb-cyan flex items-center justify-center text-xs font-black text-white"
+              class="absolute -top-2 -end-2 w-7 h-7 rounded-full bg-gradient-to-br from-stb-blue to-stb-cyan flex items-center justify-center text-xs font-black text-white shadow-lg shadow-stb-cyan/30"
             >
               {{ i + 1 }}
             </div>
           </div>
-          <h3 class="font-bold text-[var(--text-primary)] mb-2">
+          <h3 class="font-bold text-lg text-[var(--text-primary)] mb-2">
             {{ step.title[$i18n.locale] }}
           </h3>
-          <p class="text-sm text-[var(--text-secondary)]">
+          <p class="text-sm text-[var(--text-secondary)] max-w-[220px] mx-auto">
             {{ step.desc[$i18n.locale] }}
           </p>
         </div>
@@ -139,6 +123,8 @@ import {
 } from "lucide-vue-next";
 
 const localePath = useLocalePath();
+const { locale } = useI18n();
+const isAr = computed(() => locale.value === "ar");
 
 // تم تحديث القائمة لتشمل جميع الخدمات الجديدة مع ميزاتها
 const services = [
@@ -463,15 +449,45 @@ const process = [
     },
   },
 ];
-
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add("visible");
-      }),
-    { threshold: 0.1 },
-  );
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-});
 </script>
+
+<style scoped>
+.feature-item {
+  transition: transform 0.4s var(--ease-out), color 0.3s ease;
+  transition-delay: var(--d);
+}
+
+.group:hover .feature-item {
+  transform: translateX(4px);
+  color: var(--text-primary);
+}
+
+[dir="rtl"] .group:hover .feature-item {
+  transform: translateX(-4px);
+}
+
+.process__line {
+  position: absolute;
+  top: 32px;
+  left: 12.5%;
+  right: 12.5%;
+  height: 1px;
+  background: repeating-linear-gradient(90deg, rgba(0, 212, 255, 0.5) 0 8px, transparent 8px 16px);
+}
+
+.process__icon {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 20px;
+  display: grid;
+  place-items: center;
+  border-color: rgba(0, 212, 255, 0.3);
+  transition: transform 0.6s var(--ease-spring), box-shadow 0.3s ease;
+}
+
+.group:hover .process__icon {
+  transform: translateY(-6px) rotate(-6deg) scale(1.08);
+  box-shadow: 0 16px 40px -10px rgba(0, 212, 255, 0.45);
+}
+</style>

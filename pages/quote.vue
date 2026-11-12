@@ -1,21 +1,12 @@
 <template>
-  <div class="pt-28 pb-20">
-    <!-- Header -->
-    <section class="py-16 text-center">
-      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div class="tag mb-6 inline-flex">
-          <FileText class="w-3 h-3 me-1.5" />
-          {{ $t("nav.quote") }}
-        </div>
-        <h1 class="section-title mb-4">
-          <span class="gradient-text">{{ $t("quote.title") }}</span>
-        </h1>
-        <div class="section-divider" />
-        <p class="text-[var(--text-secondary)] mt-6 max-w-xl mx-auto">
-          {{ $t("quote.subtitle") }}
-        </p>
-      </div>
-    </section>
+  <div class="pt-24 pb-20">
+    <PageHeader
+      :icon="FileText"
+      :tag-text="$t('nav.quote')"
+      :title="$t('quote.title')"
+      :subtitle="$t('quote.subtitle')"
+      variant="quote"
+    />
 
     <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
       <!-- Progress Steps -->
@@ -27,7 +18,7 @@
             class="flex items-center gap-2"
           >
             <div
-              class="w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold transition-all duration-300"
+              class="step-dot w-9 h-9 rounded-xl flex items-center justify-center text-sm font-bold"
               :class="
                 currentStep > i
                   ? 'bg-gradient-to-br from-stb-blue to-stb-cyan text-white'
@@ -51,19 +42,22 @@
             </span>
             <div
               v-if="i < steps.length - 1"
-              class="w-8 sm:w-16 h-px mx-2"
-              :class="
-                currentStep > i ? 'bg-stb-cyan' : 'bg-[var(--border-color)]'
-              "
-            />
+              class="step-track w-8 sm:w-16 mx-2"
+            >
+              <span
+                class="step-track__fill"
+                :style="{ transform: `scaleX(${currentStep > i ? 1 : 0})` }"
+              />
+            </div>
           </div>
         </div>
       </div>
 
       <!-- Form Card -->
-      <div class="gradient-border p-8 reveal">
+      <div v-reveal:zoom class="gradient-border p-6 sm:p-8 overflow-hidden">
+        <Transition :name="stepTransition" mode="out-in">
         <!-- Step 1: Client Info & Project Type -->
-        <div v-if="currentStep === 0">
+        <div v-if="currentStep === 0" key="s0">
           <h2
             class="text-lg font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2"
           >
@@ -113,7 +107,7 @@
                   v-for="(type, key) in projectTypes"
                   :key="key"
                   type="button"
-                  class="p-3 rounded-xl border text-sm font-semibold transition-all duration-200 text-start flex flex-col items-start gap-2"
+                  class="p-3 rounded-xl border text-sm font-semibold choice-anim text-start flex flex-col items-start gap-2"
                   :class="
                     quoteData.projectType === key
                       ? 'border-stb-cyan bg-stb-cyan/10 text-stb-cyan'
@@ -132,7 +126,7 @@
         </div>
 
         <!-- Step 2: Project Details -->
-        <div v-if="currentStep === 1">
+        <div v-else-if="currentStep === 1" key="s1">
           <h2
             class="text-lg font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2"
           >
@@ -147,7 +141,7 @@
                   v-for="(_, key) in budgetOptions"
                   :key="key"
                   type="button"
-                  class="p-3 rounded-xl border text-sm font-semibold transition-all duration-200"
+                  class="p-3 rounded-xl border text-sm font-semibold choice-anim"
                   :class="
                     quoteData.budget === key
                       ? 'border-stb-cyan bg-stb-cyan/10 text-stb-cyan'
@@ -166,7 +160,7 @@
                   v-for="(_, key) in timelineOptions"
                   :key="key"
                   type="button"
-                  class="p-3 rounded-xl border text-sm font-semibold transition-all duration-200"
+                  class="p-3 rounded-xl border text-sm font-semibold choice-anim"
                   :class="
                     quoteData.timeline === key
                       ? 'border-stb-cyan bg-stb-cyan/10 text-stb-cyan'
@@ -195,7 +189,7 @@
         </div>
 
         <!-- Step 3: Features & Notes -->
-        <div v-if="currentStep === 2">
+        <div v-else key="s2">
           <h2
             class="text-lg font-bold text-[var(--text-primary)] mb-6 flex items-center gap-2"
           >
@@ -211,7 +205,7 @@
                 <label
                   v-for="feat in featuresList"
                   :key="feat.key"
-                  class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer transition-all duration-200"
+                  class="flex items-center gap-3 p-3 rounded-xl border cursor-pointer choice-anim"
                   :class="
                     quoteData.features.includes(feat.key)
                       ? 'border-stb-cyan bg-stb-cyan/8'
@@ -225,7 +219,7 @@
                     class="hidden"
                   />
                   <div
-                    class="w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 transition-all duration-200"
+                    class="w-5 h-5 rounded-md border-2 flex items-center justify-center flex-shrink-0 choice-anim"
                     :class="
                       quoteData.features.includes(feat.key)
                         ? 'border-stb-cyan bg-stb-cyan'
@@ -265,6 +259,8 @@
             </div>
           </div>
         </div>
+
+        </Transition>
 
         <!-- Navigation Buttons -->
         <div
@@ -318,9 +314,9 @@
       <Transition name="fade">
         <div
           v-if="generated"
-          class="mt-6 glass rounded-2xl p-8 text-center reveal"
+          class="mt-6 glass rounded-3xl p-8 text-center"
         >
-          <div class="text-5xl mb-4">🎉</div>
+          <div class="success-badge"><CheckCircle class="w-8 h-8 text-white" /></div>
           <h3 class="text-xl font-bold text-[var(--text-primary)] mb-2">
             {{
               $i18n.locale === "ar" ? "تم إنشاء عرض السعر!" : "Quote Generated!"
@@ -363,6 +359,10 @@ const { locale } = useI18n();
 const { generateQuotePDF } = usePDF();
 
 const currentStep = ref(0);
+const stepTransition = ref("step-next");
+watch(currentStep, (next, prev) => {
+  stepTransition.value = next > prev ? "step-next" : "step-prev";
+});
 const generating = ref(false);
 const generated = ref(false);
 
@@ -506,16 +506,6 @@ const resetForm = () => {
   };
 };
 
-onMounted(() => {
-  const observer = new IntersectionObserver(
-    (entries) =>
-      entries.forEach((e) => {
-        if (e.isIntersecting) e.target.classList.add("visible");
-      }),
-    { threshold: 0.1 },
-  );
-  document.querySelectorAll(".reveal").forEach((el) => observer.observe(el));
-});
 </script>
 
 <style scoped>
@@ -526,9 +516,92 @@ onMounted(() => {
   color: var(--text-primary);
   margin-bottom: 0.5rem;
 }
+.choice-anim {
+  transition:
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    color 0.25s ease,
+    transform 0.3s var(--ease-spring);
+}
+.choice-anim:hover {
+  transform: translateY(-2px);
+}
+
+.step-dot {
+  transition:
+    background-color 0.3s ease,
+    box-shadow 0.3s ease,
+    transform 0.4s var(--ease-spring);
+}
+
+.step-track {
+  position: relative;
+  height: 2px;
+  border-radius: 2px;
+  background: var(--border-color);
+  overflow: hidden;
+}
+.step-track__fill {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, var(--stb-blue-bright), var(--stb-cyan));
+  transform-origin: left center;
+  transition: transform 0.6s var(--ease-out);
+}
+[dir="rtl"] .step-track__fill {
+  transform-origin: right center;
+}
+
+.success-badge {
+  width: 64px;
+  height: 64px;
+  margin: 0 auto 1rem;
+  border-radius: 50%;
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #16a34a, #22c55e);
+  box-shadow: 0 16px 40px -10px rgba(34, 197, 94, 0.6);
+  animation: badge-pop 0.7s var(--ease-spring) both;
+}
+@keyframes badge-pop {
+  from {
+    transform: scale(0) rotate(-45deg);
+  }
+}
+
+/* Step switching (direction-aware, mirrored in RTL) */
+.step-next-enter-active,
+.step-next-leave-active,
+.step-prev-enter-active,
+.step-prev-leave-active {
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s var(--ease-out);
+}
+.step-next-enter-from,
+.step-prev-leave-to {
+  opacity: 0;
+  transform: translateX(40px);
+}
+.step-next-leave-to,
+.step-prev-enter-from {
+  opacity: 0;
+  transform: translateX(-40px);
+}
+[dir="rtl"] .step-next-enter-from,
+[dir="rtl"] .step-prev-leave-to {
+  transform: translateX(-40px);
+}
+[dir="rtl"] .step-next-leave-to,
+[dir="rtl"] .step-prev-enter-from {
+  transform: translateX(40px);
+}
+
 .fade-enter-active,
 .fade-leave-active {
-  transition: all 0.5s ease;
+  transition:
+    opacity 0.5s ease,
+    transform 0.5s var(--ease-out);
 }
 .fade-enter-from,
 .fade-leave-to {

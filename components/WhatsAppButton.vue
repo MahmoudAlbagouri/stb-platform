@@ -16,6 +16,7 @@
       target="_blank"
       rel="noopener noreferrer"
       class="wa-btn"
+      aria-label="WhatsApp"
       @mouseenter="showTooltip = true"
       @mouseleave="showTooltip = false"
     >
@@ -63,12 +64,14 @@ const showTooltip = ref(false);
   justify-content: center;
   color: white;
   box-shadow: 0 8px 25px rgba(37, 211, 102, 0.4);
-  transition: all 0.3s ease;
+  transition:
+    transform 0.4s var(--ease-spring),
+    box-shadow 0.3s ease;
   text-decoration: none;
 }
 
 .wa-btn:hover {
-  transform: scale(1.1);
+  transform: scale(1.1) rotate(-8deg);
   box-shadow: 0 12px 35px rgba(37, 211, 102, 0.5);
 }
 
@@ -106,7 +109,9 @@ const showTooltip = ref(false);
 /* Tooltip transition */
 .tooltip-enter-active,
 .tooltip-leave-active {
-  transition: all 0.2s ease;
+  transition:
+    opacity 0.2s ease,
+    transform 0.2s ease;
 }
 .tooltip-enter-from,
 .tooltip-leave-to {

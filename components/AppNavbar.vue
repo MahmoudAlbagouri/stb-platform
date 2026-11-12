@@ -1,108 +1,112 @@
 <template>
-  <nav
-    class="fixed top-0 left-0 right-0 z-50 transition-all duration-500"
-    :class="[scrolled ? 'nav-scrolled py-2' : 'py-4']"
+  <header
+    class="nav-root"
+    :class="{ 'is-scrolled': scrolled, 'is-hidden': hidden }"
   >
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="flex items-center justify-between">
+    <!-- Reading progress -->
+    <div ref="progressBar" class="nav-progress" aria-hidden="true" />
+
+    <nav class="nav-shell" aria-label="Main">
+      <div class="flex items-center justify-between gap-3">
         <!-- Logo -->
-        <NuxtLink :to="localePath('/')" class="flex items-center gap-3 group">
+        <NuxtLink :to="localePath('/')" class="flex items-center gap-3 group shrink-0">
           <div class="logo-container relative">
             <img
               src="/logo.png"
               alt="STB Logo"
-              class="h-12 w-12 object-contain transition-transform duration-300 group-hover:scale-110"
+              width="335"
+              height="314"
+              class="h-11 w-11 object-contain transition-transform duration-500 group-hover:rotate-[-8deg] group-hover:scale-110"
             />
             <div class="logo-glow" />
           </div>
-          <div>
-            <div
-              class="text-xl font-black tracking-wider gradient-text font-syne"
-            >
-              STB
-            </div>
-            <div
-              class="text-[16px] text-stb-cyan opacity-70 tracking-widest uppercase font-cairo"
-            >
+          <div class="leading-tight">
+            <div class="text-xl font-black tracking-wider gradient-text font-syne">STB</div>
+            <div class="hidden sm:block text-[13px] text-stb-cyan opacity-80 font-cairo">
               التقنية الذكية للاعمال
             </div>
           </div>
         </NuxtLink>
 
         <!-- Desktop Nav -->
-        <div class="hidden lg:flex items-center gap-1">
+        <div class="hidden lg:flex items-center gap-1 nav-links">
           <NuxtLink
             v-for="item in navItems"
             :key="item.key"
             :to="localePath(item.path)"
-            class="nav-link px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-300"
-            :class="isActive(item.path) ? 'nav-link-active' : ''"
+            class="nav-link"
+            :class="{ 'nav-link-active': isActive(item.path) }"
           >
-            <component
-              :is="item.icon"
-              class="inline w-4 h-4 me-1.5 opacity-70"
-            />
-            {{ $t(item.key) }}
-          </NuxtLink>
-
-          <NuxtLink
-            :to="localePath('/quote')"
-            class="btn-primary ms-4 text-sm flex items-center gap-2"
-          >
-            <FileText class="w-4 h-4" />
-            {{ $t("nav.quote") }}
+            <component :is="item.icon" class="w-4 h-4 opacity-70" />
+            <span>{{ $t(item.key) }}</span>
           </NuxtLink>
         </div>
 
         <!-- Actions -->
         <div class="flex items-center gap-2">
-          <!-- Language -->
+          <NuxtLink
+            v-magnetic="0.25"
+            :to="localePath('/quote')"
+            class="btn-primary hidden lg:inline-flex text-sm gap-2 !py-2.5 !px-5"
+          >
+            <FileText class="w-4 h-4" />
+            {{ $t("nav.quote") }}
+          </NuxtLink>
+
           <button
-            class="lang-btn flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-bold transition-all duration-300"
+            class="icon-btn px-3 gap-1.5 text-sm font-bold"
+            :aria-label="$i18n.locale === 'ar' ? 'Switch to English' : 'التبديل إلى العربية'"
             @click="toggleLang"
           >
             <Globe class="w-4 h-4" />
             <span>{{ $i18n.locale === "ar" ? "EN" : "عربي" }}</span>
           </button>
 
-          <!-- Dark/Light Toggle -->
           <button
-            class="theme-btn p-2.5 rounded-xl transition-all duration-300"
+            class="icon-btn w-10"
+            :aria-label="colorMode.value === 'dark' ? 'Light mode' : 'Dark mode'"
             @click="toggleColorMode"
           >
-            <Sun v-if="colorMode.value === 'dark'" class="w-5 h-5" />
-            <Moon v-else class="w-5 h-5" />
+            <Transition name="icon-swap" mode="out-in">
+              <Sun v-if="colorMode.value === 'dark'" key="sun" class="w-5 h-5" />
+              <Moon v-else key="moon" class="w-5 h-5" />
+            </Transition>
           </button>
 
-          <!-- Mobile Menu -->
           <button
-            class="lg:hidden p-2.5 rounded-xl theme-btn transition-all duration-300"
+            class="lg:hidden icon-btn w-10"
+            :aria-expanded="mobileOpen"
+            aria-label="Menu"
             @click="mobileOpen = !mobileOpen"
           >
-            <Menu v-if="!mobileOpen" class="w-5 h-5" />
-            <X v-else class="w-5 h-5" />
+            <Transition name="icon-swap" mode="out-in">
+              <Menu v-if="!mobileOpen" key="menu" class="w-5 h-5" />
+              <X v-else key="x" class="w-5 h-5" />
+            </Transition>
           </button>
         </div>
       </div>
 
       <!-- Mobile Menu -->
       <Transition name="mobile-menu">
-        <div v-if="mobileOpen" class="lg:hidden mt-4 pb-4">
-          <div class="glass rounded-2xl p-4 flex flex-col gap-2">
+        <div v-if="mobileOpen" class="lg:hidden mt-3">
+          <div class="mobile-panel">
             <NuxtLink
-              v-for="item in navItems"
+              v-for="(item, i) in navItems"
               :key="item.key"
               :to="localePath(item.path)"
-              class="nav-link-mobile flex items-center gap-3 px-4 py-3 rounded-xl text-sm font-semibold transition-all duration-300"
-              @click="mobileOpen = false"
+              class="mobile-link"
+              :class="{ 'is-active': isActive(item.path) }"
+              :style="{ '--i': i }"
             >
-              <component :is="item.icon" class="w-4 h-4 text-stb-cyan" />
-              {{ $t(item.key) }}
+              <span class="mobile-link__index">0{{ i + 1 }}</span>
+              <component :is="item.icon" class="w-5 h-5 text-stb-cyan" />
+              <span>{{ $t(item.key) }}</span>
             </NuxtLink>
             <NuxtLink
               :to="localePath('/quote')"
-              class="btn-primary text-center text-sm mt-2 flex items-center justify-center gap-2"
-              @click="mobileOpen = false"
+              class="btn-primary w-full text-sm mt-2 gap-2 mobile-link-cta"
+              :style="{ '--i': navItems.length }"
             >
               <FileText class="w-4 h-4" />
               {{ $t("nav.quote") }}
@@ -110,11 +114,8 @@
           </div>
         </div>
       </Transition>
-    </div>
-
-    <!-- Loading Line at bottom of nav -->
-    <div class="loading-line absolute bottom-0 left-0 right-0 opacity-30" />
-  </nav>
+    </nav>
+  </header>
 </template>
 
 <script setup>
@@ -135,8 +136,11 @@ const { locale, setLocale } = useI18n();
 const localePath = useLocalePath();
 const colorMode = useColorMode();
 const route = useRoute();
+
 const scrolled = ref(false);
+const hidden = ref(false);
 const mobileOpen = ref(false);
+const progressBar = ref(null);
 
 const navItems = [
   { key: "nav.home", path: "/", icon: Home },
@@ -146,37 +150,140 @@ const navItems = [
 ];
 
 const isActive = (path) => {
-  if (path === "/") return route.path === "/" || route.path === "/en/";
-  return route.path.includes(path);
+  const target = localePath(path);
+  if (path === "/") return route.path === target || route.path === `${target}/`;
+  return route.path.startsWith(target);
 };
 
-const toggleLang = () => {
-  setLocale(locale.value === "ar" ? "en" : "ar");
-};
+const toggleLang = () => setLocale(locale.value === "ar" ? "en" : "ar");
 
 const toggleColorMode = () => {
   colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
 };
 
+watch(
+  () => route.fullPath,
+  () => (mobileOpen.value = false),
+);
+
+let lastY = 0;
+let ticking = false;
+const update = () => {
+  ticking = false;
+  const y = window.scrollY;
+  scrolled.value = y > 40;
+  hidden.value = y > 360 && y > lastY + 2 && !mobileOpen.value;
+  if (y < lastY - 2) hidden.value = false;
+  lastY = y;
+  const max = document.documentElement.scrollHeight - window.innerHeight;
+  if (progressBar.value) {
+    progressBar.value.style.transform = `scaleX(${max > 0 ? Math.min(1, y / max) : 0})`;
+  }
+};
+const onScroll = () => {
+  if (ticking) return;
+  ticking = true;
+  requestAnimationFrame(update);
+};
+
 onMounted(() => {
-  window.addEventListener("scroll", () => {
-    scrolled.value = window.scrollY > 50;
-  });
+  lastY = window.scrollY;
+  update();
+  window.addEventListener("scroll", onScroll, { passive: true });
 });
+
+onBeforeUnmount(() => window.removeEventListener("scroll", onScroll));
 </script>
 
 <style scoped>
-.nav-scrolled {
+.nav-root {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 50;
+  padding: 14px 16px 0;
+  transition:
+    transform 0.5s var(--ease-out),
+    padding 0.4s var(--ease-out);
+}
+
+.nav-root.is-hidden {
+  transform: translateY(-120%);
+}
+
+.nav-shell {
+  max-width: 80rem;
+  margin: 0 auto;
+  padding: 10px 16px;
+  border-radius: 22px;
+  border: 1px solid transparent;
+  transition:
+    background-color 0.4s ease,
+    border-color 0.4s ease,
+    box-shadow 0.4s ease,
+    max-width 0.6s var(--ease-out),
+    padding 0.4s var(--ease-out);
+}
+
+.is-scrolled .nav-shell {
+  max-width: 72rem;
+  padding: 8px 12px 8px 16px;
   background: var(--nav-bg);
-  backdrop-filter: blur(20px);
-  -webkit-backdrop-filter: blur(20px);
-  border-bottom: 1px solid rgba(0, 212, 255, 0.08);
-  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(16px) saturate(160%);
+  -webkit-backdrop-filter: blur(16px) saturate(160%);
+  border-color: rgba(0, 212, 255, 0.14);
+  box-shadow:
+    0 20px 50px -20px rgba(0, 0, 0, 0.5),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+}
+
+.nav-progress {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 2px;
+  background: linear-gradient(90deg, var(--stb-blue-bright), var(--stb-cyan));
+  box-shadow: 0 0 12px rgba(0, 212, 255, 0.7);
+  transform: scaleX(0);
+  transform-origin: left center;
+  z-index: 60;
+  pointer-events: none;
+}
+
+[dir="rtl"] .nav-progress {
+  transform-origin: right center;
 }
 
 .nav-link {
-  color: var(--text-secondary);
   position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: 12px;
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  transition:
+    color 0.25s ease,
+    background-color 0.25s ease;
+}
+
+.nav-link::after {
+  content: "";
+  position: absolute;
+  bottom: 3px;
+  left: 50%;
+  width: 18px;
+  height: 2px;
+  margin-left: -9px;
+  border-radius: 2px;
+  background: var(--stb-cyan);
+  box-shadow: 0 0 8px var(--stb-cyan);
+  transform: scaleX(0);
+  transition: transform 0.35s var(--ease-out);
 }
 
 .nav-link:hover,
@@ -185,61 +292,40 @@ onMounted(() => {
   background: rgba(0, 212, 255, 0.08);
 }
 
-.nav-link-active::before {
-  content: "";
-  position: absolute;
-  bottom: 4px;
-  left: 50%;
-  transform: translateX(-50%);
-  width: 20px;
-  height: 2px;
-  background: var(--stb-cyan);
-  border-radius: 1px;
+.nav-link-active::after,
+.nav-link:hover::after {
+  transform: scaleX(1);
 }
 
-.nav-link-mobile {
-  color: var(--text-secondary);
-}
-
-.nav-link-mobile:hover {
-  color: var(--stb-cyan);
-  background: rgba(0, 212, 255, 0.08);
-}
-
-.lang-btn {
+.icon-btn {
+  height: 40px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
   color: var(--text-secondary);
   border: 1px solid var(--border-color);
   background: var(--bg-card);
+  transition:
+    color 0.25s ease,
+    border-color 0.25s ease,
+    background-color 0.25s ease,
+    transform 0.3s var(--ease-spring);
 }
 
-.lang-btn:hover {
+.icon-btn:hover {
   color: var(--stb-cyan);
   border-color: var(--stb-cyan);
-  background: rgba(0, 212, 255, 0.08);
-}
-
-.theme-btn {
-  color: var(--text-secondary);
-  border: 1px solid var(--border-color);
-  background: var(--bg-card);
-}
-
-.theme-btn:hover {
-  color: var(--stb-cyan);
-  border-color: var(--stb-cyan);
-}
-
-.logo-container {
-  position: relative;
+  transform: translateY(-2px);
 }
 
 .logo-glow {
   position: absolute;
-  inset: -4px;
+  inset: -6px;
   border-radius: 50%;
-  background: radial-gradient(circle, rgba(0, 212, 255, 0.2), transparent);
+  background: radial-gradient(circle, rgba(0, 212, 255, 0.35), transparent 70%);
   opacity: 0;
-  transition: opacity 0.3s ease;
+  transition: opacity 0.4s ease;
   pointer-events: none;
 }
 
@@ -247,14 +333,80 @@ onMounted(() => {
   opacity: 1;
 }
 
-/* Mobile menu transition */
+/* Mobile */
+.mobile-panel {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 12px;
+  border-radius: 20px;
+  background: var(--nav-bg);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 212, 255, 0.14);
+}
+
+.mobile-link {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 14px;
+  font-weight: 700;
+  color: var(--text-primary);
+  transition: background-color 0.25s ease;
+  animation: menu-item-in 0.5s var(--ease-out) both;
+  animation-delay: calc(var(--i) * 0.05s + 0.05s);
+}
+
+.mobile-link-cta {
+  animation: menu-item-in 0.5s var(--ease-out) both;
+  animation-delay: calc(var(--i) * 0.05s + 0.05s);
+}
+
+.mobile-link.is-active,
+.mobile-link:hover {
+  background: rgba(0, 212, 255, 0.08);
+}
+
+.mobile-link__index {
+  font-family: "Space Mono", monospace;
+  font-size: 0.7rem;
+  color: var(--text-secondary);
+  opacity: 0.7;
+}
+
+@keyframes menu-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(12px);
+  }
+}
+
 .mobile-menu-enter-active,
 .mobile-menu-leave-active {
-  transition: all 0.3s ease;
+  transition:
+    opacity 0.3s ease,
+    transform 0.4s var(--ease-out);
 }
 .mobile-menu-enter-from,
 .mobile-menu-leave-to {
   opacity: 0;
-  transform: translateY(-10px);
+  transform: translateY(-10px) scale(0.98);
+}
+
+.icon-swap-enter-active,
+.icon-swap-leave-active {
+  transition:
+    opacity 0.2s ease,
+    transform 0.3s var(--ease-out);
+}
+.icon-swap-enter-from {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+.icon-swap-leave-to {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
 }
 </style>

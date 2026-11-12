@@ -1,32 +1,23 @@
 <template>
-  <div :class="colorMode.value" :dir="$i18n.locale === 'ar' ? 'rtl' : 'ltr'">
-    <!-- Particles Background -->
-    <div class="particles-bg">
-      <div
-        v-for="i in 20"
-        :key="i"
-        class="particle"
-        :style="{
-          left: `${(i * 5.1) % 100}%`,
-          animationDuration: `${8 + (i % 7)}s`,
-          animationDelay: `${-i * 0.5}s`,
-          width: `${1 + (i % 3)}px`,
-          height: `${1 + (i % 3)}px`,
-          opacity: 0.3 + (i % 5) * 0.1
-        }"
-      />
-    </div>
-
-    <!-- Grid Background -->
-    <div class="fixed inset-0 grid-lines pointer-events-none z-0" />
-
-    <!-- App Content -->
+  <div>
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <RouteCurtain />
   </div>
 </template>
 
 <script setup>
-const colorMode = useColorMode()
+// Put lang/dir on <html> so RTL/LTR CSS (fonts, logical spacing) applies
+// document-wide and search engines get the correct language + hreflang tags.
+const i18nHead = useLocaleHead({ addDirAttribute: true, addSeoAttributes: true });
+
+useHead({
+  htmlAttrs: {
+    lang: () => i18nHead.value.htmlAttrs?.lang,
+    dir: () => i18nHead.value.htmlAttrs?.dir,
+  },
+  link: () => i18nHead.value.link || [],
+  meta: () => i18nHead.value.meta || [],
+});
 </script>

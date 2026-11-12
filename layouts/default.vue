@@ -1,17 +1,18 @@
 <template>
-  <div class="min-h-screen relative z-10">
-    <!-- Navbar -->
-    <AppNavbar />
+  <div class="min-h-screen relative">
+    <!-- Ambient WebGL background (lazy, idle-loaded) -->
+    <SceneBackground />
 
-    <!-- Page Content -->
-    <main>
-      <slot />
-    </main>
+    <div class="relative z-10">
+      <AppNavbar />
 
-    <!-- Footer -->
-    <AppFooter />
+      <main>
+        <slot />
+      </main>
 
-    <!-- WhatsApp Floating Button -->
+      <AppFooter />
+    </div>
+
     <WhatsAppButton />
   </div>
 </template>
